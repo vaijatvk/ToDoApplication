@@ -1,26 +1,23 @@
-<mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form class="example-form" [formGroup]="loginForm">
-        <table class="example-full-width" cellspacing="0">
-          <tr>
-            <td>
-              <mat-form-field class="example-full-width">
-              <input matInput placeholder="Username" formControlName="userName" name="username" required>
-              </mat-form-field>
-            </td>
-          </tr>
-          <tr>
-          <td><mat-form-field class="example-full-width">
-            <input matInput placeholder="Password" formControlName="passWord" type="password" name="password" required>
-          </mat-form-field></td>
-        </tr></table>
+ <ngb-alert [type]="type" (close)="message='';type='';">{{ message }}</ngb-alert>
+
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <div class="first">
+        <h2>Login</h2>
+      </div>
+  
+      <!-- Login Form -->
+      <form [formGroup]="loginForm">
+        <input type="text" id="login" class="fadeIn second" name="login" placeholder="User Name" formControlName="userName">
+        <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password" formControlName="passWord">
       </form>
-      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button (click)="login()" color="primary">Login</button>
-    </mat-card-actions>
-  </mat-card>
+  
+      <!-- Footer -->
+      <div id="formFooter">
+        <input type="submit" class="fadeIn fourth" value="Log In" (click)="login()">
+      </div>
+  
+    </div>
+  </div>

@@ -1,0 +1,24 @@
+<ngb-alert [type]="type" (close)="message='';type='';">{{ message }}</ngb-alert>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <div class="first">
+      <h2>User</h2>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="userForm">
+      <input type="hidden" id="index" formControlName="index" />
+      <input type="text" id="login" class="fadeIn second" name="login" value="{{user.name}}" placeholder="User Name" formControlName="userName" required>
+      <input type="email" id="password" class="fadeIn third" name="login" value="{{user.email}}" placeholder="Email ID" formControlName="email" required>
+    </form>
+
+    <!-- Footer -->
+    <div id="formFooter">
+      <input type="submit" class="fadeIn fourth" value="Add User" (click)="AddUser()">
+    </div>
+
+  </div>
+</div>

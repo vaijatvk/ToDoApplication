@@ -1,0 +1,24 @@
+<h2>Users <button class="btn btn-primary" style='float: right;' (click)="AddUser()">Add</button></h2>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col" sortable="name" >Name</th>
+    <th scope="col" sortable="area" >Email</th>
+    <th scope="col" sortable="area" >Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of userList;index as i">
+    <th scope="row">{{i+1}}</th>
+    <td>
+      {{ user.name }}
+    </td>
+    <td>{{ user.email }}</td>
+    <td><button class="btn btn-danger" (click)="RemoveUser(i)">Remove</button>
+      &nbsp;&nbsp;  <button class="btn btn-warning" (click)="UpdateUser(i)">Update</button></td>
+    
+  </tr>
+  </tbody>
+</table>

@@ -1,6 +1,7 @@
 import { Component, OnInit,NgModule } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 loginForm : FormGroup;
-  constructor(private _route : Router) { 
+userName;
+passWord;
+public type;
+public message;
+  constructor(private _route : Router,private _login:LoginService) { 
 
   }
 
@@ -21,14 +26,29 @@ loginForm : FormGroup;
   }
 
   login(){
-    if(!this.loginForm.controls.userName.value){
-      alert('please')
+    this.userName = this.loginForm.controls.userName.value;
+    this.passWord = this.loginForm.controls.passWord.value;
+    if(!this.userName){
+      this.type = 'danger';
+      this.message ='Please enter user name';
     }
-    else if(!this.loginForm.controls.passWord.value){
-      alert('please 2')
+    else if(!this.passWord){
+      this.type = 'danger';
+      this.message ='Please enter password';
     }
     else{
-      this._route.navigate(["login"]);
+      if(this._login.checkLogin(this.userName,this.passWord)){
+        this.type = 'success';
+        this.message ='Login Successful.';
+        this._route.navigate(["users"]);
+      }
+      else
+      {
+        this.type = 'danger';
+      this.message ='Please enter valid credentials';
+      }
     }
   }
+
+ 
 }
