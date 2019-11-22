@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl,FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
@@ -14,15 +14,12 @@ export class CreateUserComponent implements OnInit {
   message;
   type;
   user = {id:null,name:'',email:''};
-  constructor(private _user : UserService,private route: ActivatedRoute,private _router:Router) { }
-
-  ngOnInit() {
+  constructor(private _user : UserService,private route: ActivatedRoute,private _router:Router,private formBuilder : FormBuilder) { 
     this.index = this.route.snapshot.paramMap.get('index');
     this.user = this._user.GetUser(this.index);
-    this.userForm = new FormGroup({
-      index : new FormControl(),
-      userName : new FormControl(),
-      email : new FormControl()
+    this.userForm = this.formBuilder.group({
+      userName : ['',Validators.required],
+      email : ['',[Validators.required,Validators.email]]
     });
     if(this.user != undefined){
       this.userForm.patchValue({
@@ -34,20 +31,34 @@ export class CreateUserComponent implements OnInit {
     {
       this.user = {id:null,name:'',email:''};
     }
+
+  }
+
+  ngOnInit() {
+    
   }
 
   AddUser(){
-    if(!this.userForm.controls.userName.value){
+    if(this.userForm.controls.userName.errors){
       this.type = 'danger';
       this.message ='Please enter name';
       return;
     }
-    if(!this.userForm.controls.email.value){
+    else if(this.userForm.controls.email.errors){
+      if (this.userForm.controls.email.errors.required){
       this.type = 'danger';
       this.message ='Please enter email';
       return;
+      }
+      else if(this.userForm.controls.email.errors){
+        if (this.userForm.controls.email.errors.email){
+          this.type = 'danger';
+          this.message ='Please enter Valid Email Address';
+        }
+        return;
+      }
     }
-
+    
     if(!this.index){
       this._user.AddUser(this.userForm.controls.userName.value,this.userForm.controls.email.value);
     }
@@ -58,5 +69,4 @@ export class CreateUserComponent implements OnInit {
 
     this._router.navigate(["users"]);
   }
-
 }

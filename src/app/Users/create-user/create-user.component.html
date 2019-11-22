@@ -10,7 +10,6 @@
 
     <!-- Login Form -->
     <form [formGroup]="userForm">
-      <input type="hidden" id="index" formControlName="index" />
       <input type="text" id="login" class="fadeIn second" name="login" value="{{user.name}}" placeholder="User Name" formControlName="userName" required>
       <input type="email" id="password" class="fadeIn third" name="login" value="{{user.email}}" placeholder="Email ID" formControlName="email" required>
     </form>
